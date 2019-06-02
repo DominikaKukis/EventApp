@@ -11,14 +11,32 @@ namespace EventApp.Controllers
     public class EventController : Controller
     {
         // GET: Event
-        public ActionResult Index()
+        public ActionResult Index(string searchString, string sortOrder)
         {
             using (DbModels dbModel = new DbModels())
             {
-                return View(dbModel.EventTable.ToList());
+
+                var events = dbModel.EventTable.AsQueryable();
+
+                ViewBag.EventNameSortParam = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+
+                switch (sortOrder)
+                {
+                    case "Name_desc":
+                        events = events.OrderBy(x => x.Name);
+                        return View(events.ToList());
+                }
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    return View(dbModel.EventTable.Where(x => x.Name.Contains(searchString) || x.Address.Contains(searchString)).ToList());
+                }
+
+                else return View(dbModel.EventTable.ToList());
             }
                 
         }
+
 
         // GET: Event/Details/5
         public ActionResult Details(int id)

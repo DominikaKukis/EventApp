@@ -6,10 +6,19 @@
 
 <h2>Index</h2>
 
+@using (Html.BeginForm("Index", "Event", FormMethod.Get))
+{
+    <div>
+        Search by name/address @Html.TextBox("searchString")
+        <input id="Submit" type="submit" value="Search"/>
+
+    </div>
+}
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.EventNameSortParam })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Date)
