@@ -6,6 +6,9 @@
     <edmx:Diagrams>
       <Diagram DiagramId="0f293137e0e74d5d9c96e1fa87bc2c9a" Name="Diagram1">
         <EntityTypeShape EntityType="dbEventModel.EventTable" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbEventModel.Comment" Width="1.5" PointX="3.375" PointY="1.375" />
+        <EntityTypeShape EntityType="dbEventModel.UserTable" Width="1.5" PointX="0.75" PointY="4.75" />
+        <AssociationConnector Association="dbEventModel.FK_Comment_EventTable" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

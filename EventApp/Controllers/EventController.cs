@@ -62,6 +62,9 @@ namespace EventApp.Controllers
             using (DbModels dbModels = new DbModels())
 
             {
+                //var tempId = (from c in dbModels.EventTable select eventTable.Id).Max();
+                //tempId++;
+                //eventTable.Id = tempId;
                 dbModels.EventTable.Add(eventTable);
                 dbModels.SaveChanges();
                 return RedirectToAction("Index");

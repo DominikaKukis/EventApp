@@ -4,7 +4,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -14,8 +14,45 @@
     <Property Name="Cost" Type="Double" />
     <Property Name="LimitOfPlace" Type="Int32" />
     <Property Name="AgeRequirement" Type="Int32" />
+    <NavigationProperty Name="Comment" Relationship="dbEventModel.FK_Comment_EventTable" FromRole="EventTable" ToRole="Comment" />
   </EntityType>
   <EntityContainer Name="DbModels" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="EventTable" EntityType="Self.EventTable" />
+    <EntitySet Name="Comment" EntityType="dbEventModel.Comment" />
+    <EntitySet Name="UserTable" EntityType="dbEventModel.UserTable" />
+    <AssociationSet Name="FK_Comment_EventTable" Association="dbEventModel.FK_Comment_EventTable">
+      <End Role="EventTable" EntitySet="EventTable" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EventTable" Relationship="dbEventModel.FK_Comment_EventTable" FromRole="Comment" ToRole="EventTable" />
+  </EntityType>
+  <EntityType Name="UserTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EncryptedPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Admin" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Comment_EventTable">
+    <End Type="dbEventModel.EventTable" Role="EventTable" Multiplicity="1" />
+    <End Type="dbEventModel.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventTable">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

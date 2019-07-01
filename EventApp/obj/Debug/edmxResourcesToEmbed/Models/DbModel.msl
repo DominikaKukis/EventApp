@@ -2,7 +2,7 @@
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="dbEventModelStoreContainer" CdmEntityContainer="DbModels">
     <EntitySetMapping Name="EventTable">
-      <EntityTypeMapping TypeName="dbEventModel.EventTable">
+      <EntityTypeMapping TypeName="IsTypeOf(dbEventModel.EventTable)">
         <MappingFragment StoreEntitySet="EventTable">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -14,6 +14,25 @@
           <ScalarProperty Name="Cost" ColumnName="Cost" />
           <ScalarProperty Name="LimitOfPlace" ColumnName="LimitOfPlace" />
           <ScalarProperty Name="AgeRequirement" ColumnName="AgeRequirement" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comment">
+      <EntityTypeMapping TypeName="dbEventModel.Comment">
+        <MappingFragment StoreEntitySet="Comment">
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserTable">
+      <EntityTypeMapping TypeName="dbEventModel.UserTable">
+        <MappingFragment StoreEntitySet="UserTable">
+          <ScalarProperty Name="Admin" ColumnName="Admin" />
+          <ScalarProperty Name="EncryptedPassword" ColumnName="EncryptedPassword" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

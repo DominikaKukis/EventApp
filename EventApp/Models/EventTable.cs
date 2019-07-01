@@ -14,6 +14,12 @@ namespace EventApp.Models
     
     public partial class EventTable
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EventTable()
+        {
+            this.Comment = new HashSet<Comment>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public System.DateTime Date { get; set; }
@@ -24,5 +30,8 @@ namespace EventApp.Models
         public Nullable<double> Cost { get; set; }
         public Nullable<int> LimitOfPlace { get; set; }
         public Nullable<int> AgeRequirement { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comment { get; set; }
     }
 }

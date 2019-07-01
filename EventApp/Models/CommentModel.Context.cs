@@ -13,10 +13,10 @@ namespace EventApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DbModels : DbContext
+    public partial class CommentModel : DbContext
     {
-        public DbModels()
-            : base("name=DbModels")
+        public CommentModel()
+            : base("name=CommentModel")
         {
         }
     
@@ -25,8 +25,6 @@ namespace EventApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<EventTable> EventTable { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
-        public virtual DbSet<UserTable> UserTable { get; set; }
     }
 }
