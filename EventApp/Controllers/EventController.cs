@@ -11,13 +11,12 @@ namespace EventApp.Controllers
     public class EventController : Controller
     {
         // GET: Event
-        public ActionResult Index(string searchString, string sortOrder)
+        public ActionResult Index(string searchString, string sortOrder, string nameString, string addressString, string costString, string maxDateString, string minDateString)
         {
             using (DbModels dbModel = new DbModels())
             {
 
                 var events = dbModel.EventTable.AsQueryable();
-
                 ViewBag.EventNameSortParam = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
 
                 switch (sortOrder)
@@ -32,6 +31,51 @@ namespace EventApp.Controllers
                     return View(dbModel.EventTable.Where(x => x.Name.Contains(searchString) || x.Address.Contains(searchString)).ToList());
                 }
 
+                else if(!string.IsNullOrEmpty(nameString) || !string.IsNullOrEmpty(addressString) || !string.IsNullOrEmpty(costString) || !string.IsNullOrEmpty(maxDateString) || !string.IsNullOrEmpty(minDateString)) {
+
+                    if (!string.IsNullOrEmpty(maxDateString))
+                    {
+                        var maxDate = DateTime.Parse(maxDateString);
+
+                        if (!string.IsNullOrEmpty(minDateString))
+                        {
+                            var minDate = DateTime.Parse(minDateString);
+
+                            if (!string.IsNullOrEmpty(costString))
+                            {
+                                double cost = Double.Parse(costString);
+                                return View(dbModel.EventTable.Where(x => x.Name.Contains(nameString) && x.Address.Contains(addressString) && (x.Cost <= cost || x.Cost == null) && x.Date <= maxDate && x.Date >= minDate).ToList());
+                            }
+
+                            return View(dbModel.EventTable.Where(x => x.Name.Contains(nameString) && x.Address.Contains(addressString) && x.Date <= maxDate && x.Date >= minDate).ToList());
+
+                        }
+
+                        if (!string.IsNullOrEmpty(costString))
+                        {
+                            double cost = Double.Parse(costString);
+                            return View(dbModel.EventTable.Where(x => x.Name.Contains(nameString) && x.Address.Contains(addressString) && (x.Cost <= cost || x.Cost == null) && x.Date <= maxDate).ToList());
+                        }
+                        return View(dbModel.EventTable.Where(x => x.Name.Contains(nameString) && x.Address.Contains(addressString) && x.Date <= maxDate).ToList());
+
+                    }
+
+                    if (!string.IsNullOrEmpty(minDateString))
+                    {
+                        var minDate = DateTime.Parse(minDateString);
+                        return View(dbModel.EventTable.Where(x => x.Name.Contains(nameString) && x.Address.Contains(addressString) && x.Date >= minDate).ToList());
+
+                    }
+
+                    if (!string.IsNullOrEmpty(costString))
+                    {
+                        double cost = Double.Parse(costString);
+                        return View(dbModel.EventTable.Where(x => x.Name.Contains(nameString) && x.Address.Contains(addressString) && (x.Cost <= cost || x.Cost == null)).ToList());
+                    }
+
+                    return View(dbModel.EventTable.Where(x => x.Name.Contains(nameString) && x.Address.Contains(addressString)).ToList());
+                }
+                
                 else return View(dbModel.EventTable.ToList());
             }
                 
